@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "book_paging"
 include(":app")
- 
+include(":api")
+include(":presentation")
+include(":domain")
+include(":data")
+include(":database")
