@@ -1,15 +1,18 @@
 package com.example.data.repository
 
 import com.example.data.dataSource.BookDataSource
+import com.example.data.dataSource.LikeDataSource
 import com.example.data.mapper.fromEntityToModel
 import com.example.domain.model.BookModel
 import com.example.domain.repository.BookRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(
     private val bookDataSource: BookDataSource,
+    private val likeDataSource: LikeDataSource
 ) : BookRepository {
     private var currentPage = 1
     private val pageSize = 20
@@ -34,4 +37,5 @@ class BookRepositoryImpl @Inject constructor(
         _booksFlow.value += newBooks
         currentPage++
     }
+    override fun getLikesFlow(): Flow<List<String>> = likeDataSource.getAllIdsFlow()
 }
