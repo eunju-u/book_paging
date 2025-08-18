@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.presentation.R
 import com.example.presentation.TabType
 import com.example.presentation.ui.like.LikeContent
@@ -20,8 +21,8 @@ import com.example.presentation.viewModel.BookViewModel
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: BookViewModel
-
+    viewModel: BookViewModel,
+    navController: NavHostController,
 ) {
     val selectedTab by viewModel.selectedTab.collectAsState()
 
@@ -65,8 +66,8 @@ fun MainScreen(
                 .padding(innerPadding)
         ) {
             when (selectedTab) {
-                TabType.SEARCH -> SearchContent( viewModel)
-                TabType.LIKE -> LikeContent( viewModel)
+                TabType.SEARCH -> SearchContent(viewModel, navController)
+                TabType.LIKE -> LikeContent(viewModel, navController)
             }
         }
     }

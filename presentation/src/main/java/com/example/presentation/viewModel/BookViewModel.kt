@@ -15,11 +15,13 @@ import com.example.presentation.LikeSortType
 import com.example.presentation.SearchSortType
 import com.example.presentation.TabType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -36,7 +38,8 @@ class BookViewModel @Inject constructor(
     private val _selectedTab = MutableStateFlow(TabType.SEARCH)
     val selectedTab: StateFlow<TabType> = _selectedTab
 
-    val books = bookUseCase.getCombineFlow().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    val books =
+        bookUseCase.getCombineFlow().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
     private val _likes = MutableStateFlow<List<BookModel>>(emptyList())
 
     val likes: StateFlow<List<BookModel>> = _likes
@@ -158,5 +161,15 @@ class BookViewModel @Inject constructor(
         }
 
         _likes.value = sorted
+    }
+
+    // book id로 책 정보 get
+    fun getBookFlow(bookId: String): Flow<BookModel?> {
+        return combine(
+            books,
+            likes
+        ) { booksList, likesList ->
+            booksList.firstOrNull { it.id == bookId } ?: likesList.firstOrNull { it.id == bookId }
+        }
     }
 }

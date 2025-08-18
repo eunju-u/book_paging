@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.presentation.ButtonType
 import com.example.presentation.LikeFilterType
 import com.example.presentation.LikeSortType
@@ -30,7 +31,8 @@ import com.example.presentation.viewModel.BookViewModel
 
 @Composable
 fun LikeContent(
-    viewModel: BookViewModel
+    viewModel: BookViewModel,
+    navController: NavController
 ) {
     val list by viewModel.likes.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -76,7 +78,9 @@ fun LikeContent(
                     BookItemWidget(
                         book = item,
                         onHeartClick = { viewModel.toggleLike(item) },
-                        onClick = {}
+                        onClick = {
+                            navController.navigate("DetailContent/${item.id}")
+                        }
                     )
                 }
             }

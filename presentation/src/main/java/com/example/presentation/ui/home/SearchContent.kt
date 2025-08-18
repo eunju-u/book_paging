@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.presentation.SearchSortType
 import com.example.presentation.TabType
 import com.example.presentation.ui.widget.BookItemWidget
@@ -35,7 +36,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SearchContent(
-    viewModel: BookViewModel
+    viewModel: BookViewModel,
+    navController: NavController
 ) {
     val list by viewModel.books.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -98,7 +100,9 @@ fun SearchContent(
                         BookItemWidget(
                             book = item,
                             onHeartClick = { viewModel.toggleLike(item) },
-                            onClick = {}
+                            onClick = {
+                                navController.navigate("DetailContent/${item.id}")
+                            }
                         )
                     }
                 }
