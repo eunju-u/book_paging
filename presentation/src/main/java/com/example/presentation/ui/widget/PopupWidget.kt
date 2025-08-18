@@ -56,6 +56,7 @@ fun <T> PopupWidget(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { onItemSelected(item) }
+                            .background(color = if (isSelected) Color(0xFFF5F5F5) else Color.Transparent)
                             .border(
                                 width = if (isSelected) 1.5.dp else 0.dp,
                                 color = if (isSelected) Color.DarkGray else Color.Transparent,

@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -83,6 +84,7 @@ fun BookItemWidget(
                 verticalArrangement = Arrangement.spacedBy(3.dp),
                 modifier = Modifier.weight(1f)
             ) {
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "도서",
                     style = MaterialTheme.typography.titleSmall.copy(color = Color.Gray),
@@ -91,10 +93,9 @@ fun BookItemWidget(
                 RowTextWidget(
                     left = "저자", right = book.authors.joinToString(", "), color = Color.Gray
                 )
-                RowTextWidget(left = "출판사", right = book.publisher, color = Color.Gray)
-                RowTextWidget(left = "출간일", right = book.datetime, color = Color.Gray)
-                RowTextWidget(left = "가격", right = "${book.price}원", color = Color.Gray)
-
+                RowTextWidget(left = stringResource(R.string.book_publisher), right = book.publisher, color = Color.Gray)
+                RowTextWidget(left = stringResource(R.string.book_date), right = book.datetime, color = Color.Gray)
+                Spacer(modifier = Modifier.height(30.dp))
             }
         }
 

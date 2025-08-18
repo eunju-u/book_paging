@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">presentation</string>
+
+    <string name="search">검색</string>
+    <string name="like">즐겨찾기</string>
+    <string name="hint">제목 또는 저자를 입력해주세요.</string>
+    <string name="book_info">책소개</string>
+    <string name="book_publisher">출판사</string>
+    <string name="book_date">출간일</string>
+    <string name="book_isbm">ISBN</string>
+    <string name="book_price">정상가</string>
+    <string name="book_sale_price">할인가</string>
+    <string name="book_author">저자</string>
+    <string name="filter">필터</string>
+    <string name="sort">정렬</string>
+
 </resources>

@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.SoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.presentation.ButtonType
 import com.example.presentation.R
@@ -38,7 +39,8 @@ fun TopWidget(
     ) {
         //제목
         Text(
-            text = if (selectedTabType == TabType.SEARCH) "검색" else "즐겨찾기",
+            text = if (selectedTabType == TabType.SEARCH)
+                stringResource(R.string.search) else stringResource(R.string.like),
             style = MaterialTheme.typography.headlineMedium
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -50,7 +52,7 @@ fun TopWidget(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 25.dp),
+                .padding(horizontal = 15.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -59,7 +61,7 @@ fun TopWidget(
 
             if (selectedTabType == TabType.SEARCH) {
                 LeftImageButton(
-                    text = "정렬",
+                    text = stringResource(R.string.sort),
                     vectorImageId = R.drawable.icon_sort,
                     onItemClick = { onSortClick(ButtonType.SEARCH_SORT) }
                 )
@@ -69,13 +71,13 @@ fun TopWidget(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     LeftImageButton(
-                        text = "필터",
+                        text = stringResource(R.string.filter),
                         vectorImageId = R.drawable.icon_filter,
                         onItemClick = { onSortClick(ButtonType.LIKE_FILTER) },
                         pointer = pointer
                     )
                     LeftImageButton(
-                        text = "정렬",
+                        text = stringResource(R.string.sort),
                         vectorImageId = R.drawable.icon_sort,
                         onItemClick = { onSortClick(ButtonType.LIKE_SORT) }
                     )

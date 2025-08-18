@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -127,8 +128,8 @@ fun DetailContent(
                 painter = painter,
                 contentDescription = "책 이미지",
                 modifier = Modifier
-                    .width(200.dp)
-                    .height(300.dp)
+                    .width(170.dp)
+                    .height(250.dp)
                     .clip(RoundedCornerShape(10.dp)),
                 contentScale = ContentScale.Crop
             )
@@ -141,20 +142,44 @@ fun DetailContent(
                 modifier = Modifier.weight(1f)
             ) {
                 RowTextWidget(
-                    left = "저자",
+                    left = stringResource(id = R.string.book_author),
                     right = book.authors.joinToString(", "),
                     color = Color.Black
                 )
-                RowTextWidget(left = "출판사", right = book.publisher, color = Color.Black)
-                RowTextWidget(left = "출간일", right = book.datetime, color = Color.Black)
-                RowTextWidget(left = "ISBN", right = book.isbn, color = Color.Black)
-                RowTextWidget(left = "정상가", right = "${book.price}원", color = Color.Black)
-                RowTextWidget(left = "할인가", right = "${book.salePrice}원", color = Color.Black)
+                RowTextWidget(
+                    left = stringResource(id = R.string.book_publisher),
+                    right = book.publisher,
+                    color = Color.Black
+                )
+                RowTextWidget(
+                    left = stringResource(id = R.string.book_date),
+                    right = book.datetime,
+                    color = Color.Black
+                )
+                RowTextWidget(
+                    left = stringResource(id = R.string.book_isbm),
+                    right = book.isbn,
+                    color = Color.Black
+                )
+                RowTextWidget(
+                    left = stringResource(id = R.string.book_price),
+                    right = "${book.price}원",
+                    color = Color.Black
+                )
+                RowTextWidget(
+                    left = stringResource(id = R.string.book_sale_price),
+                    right = "${book.salePrice}원",
+                    color = Color.Black
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "책소개", color = Color.Black, fontWeight = FontWeight.Bold)
+        Text(
+            text = stringResource(id = R.string.book_info),
+            color = Color.Black,
+            fontWeight = FontWeight.Bold
+        )
         Spacer(modifier = Modifier.height(15.dp))
         Text(text = book.contents, color = Color.Black)
     }

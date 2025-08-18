@@ -58,7 +58,7 @@ class BookViewModel @Inject constructor(
     val searchSort: StateFlow<SearchSortType> = _searchSort
 
     // 즐겨찾기 정렬 선택
-    private val _likeSort = MutableStateFlow(LikeSortType.DSCENDING)
+    private val _likeSort = MutableStateFlow(LikeSortType.ASCENDING)
     val likeSort: StateFlow<LikeSortType> = _likeSort
 
     // 즐겨찾기 필터 선택값

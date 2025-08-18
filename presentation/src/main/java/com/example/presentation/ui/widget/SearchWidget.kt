@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
@@ -51,7 +52,7 @@ fun SearchWidget(
     val focusManager = LocalFocusManager.current
     var textFieldState by remember { mutableStateOf(TextFieldValue(text)) }
 
-    val pureGrayColor = Color.LightGray
+    val pureGrayColor = Color(0xFFF5F5F5)
     val grayColor = Color.Gray
     val darkColor = Color.DarkGray
     var iconColor by remember { mutableStateOf(pureGrayColor) }
@@ -60,7 +61,7 @@ fun SearchWidget(
     Surface(
         modifier = Modifier
             .wrapContentHeight()
-            .padding(PaddingValues(horizontal = 25.dp))
+            .padding(PaddingValues(horizontal = 15.dp))
             .background(color = pureGrayColor, shape = RoundedCornerShape(15.dp))
             .clip(shape = RoundedCornerShape(10.dp))
             .padding(PaddingValues(horizontal = 10.dp, vertical = 12.dp))
@@ -105,7 +106,7 @@ fun SearchWidget(
                 decorationBox = { innerTextField ->
                     if (textFieldState.text.isEmpty()) {
                         Text(
-                            text = "제목 또는 저자를 입력해주세요.",
+                            text = stringResource(R.string.hint),
                             style = MaterialTheme.typography.labelSmall,
                             color = grayColor
                         )

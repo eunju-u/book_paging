@@ -50,7 +50,7 @@ fun LikeContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.LightGray),
+            .background(Color(0xFFF5F5F5)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopWidget(
