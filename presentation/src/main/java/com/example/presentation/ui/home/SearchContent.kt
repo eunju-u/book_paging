@@ -25,8 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import com.example.presentation.SearchSortType
 import com.example.presentation.TabType
 import com.example.presentation.ui.widget.BookItemWidget
+import com.example.presentation.ui.widget.PopupWidget
 import com.example.presentation.ui.widget.TopWidget
 import com.example.presentation.viewModel.BookViewModel
 import kotlinx.coroutines.launch
@@ -77,7 +79,10 @@ fun SearchContent(
                 },
                 keyboardController = keyboardController,
                 selectedSort = selectedSort.text,
-                onSortClick = { showSort = true }
+                onSortClick = { type ->
+                    viewModel.selectButtonType(type)
+                    showSort = true
+                }
             )
 
 
@@ -101,7 +106,15 @@ fun SearchContent(
         }
 
         if (showSort) {
-            //팝업 노출
+            PopupWidget(
+                items = SearchSortType.entries,
+                selectedItem = selectedSort,
+                onDismiss = { showSort = false },
+                onItemSelected = {
+                    viewModel.selectSearchSort(it)
+                    showSort = false
+                }, getText = { it.text }
+            )
         }
         if (viewModel.isLoading) {
             CircularProgressIndicator(

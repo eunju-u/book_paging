@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import com.example.presentation.ButtonType
 import com.example.presentation.R
 import com.example.presentation.TabType
 
@@ -24,8 +25,9 @@ fun TopWidget(
     selectedTabType: TabType = TabType.SEARCH,
     onSearch: (String) -> Unit = {},
     keyboardController: SoftwareKeyboardController? = null,
-    selectedSort: String = "",
-    onSortClick: () -> Unit,
+    selectedSort: String= "",
+    onSortClick: (type: ButtonType) -> Unit,
+    pointer: Boolean = false
 ) {
     Column(
         modifier = Modifier.fillMaxWidth().background(Color.White),
@@ -56,7 +58,7 @@ fun TopWidget(
                 LeftImageButton(
                     text = "정렬",
                     vectorImageId = R.drawable.icon_sort,
-                    onItemClick = { onSortClick() }
+                    onItemClick = { onSortClick(ButtonType.SEARCH_SORT) }
                 )
             } else {
                 Row(
@@ -66,12 +68,13 @@ fun TopWidget(
                     LeftImageButton(
                         text = "필터",
                         vectorImageId = R.drawable.icon_filter,
-                        onItemClick = { onSortClick() }
+                        onItemClick = { onSortClick(ButtonType.LIKE_FILTER) },
+                        pointer = pointer
                     )
                     LeftImageButton(
                         text = "정렬",
                         vectorImageId = R.drawable.icon_sort,
-                        onItemClick = { onSortClick() }
+                        onItemClick = { onSortClick(ButtonType.LIKE_SORT) }
                     )
                 }
             }

@@ -107,7 +107,7 @@ fun SearchWidget(
                 decorationBox = { innerTextField ->
                     if (textFieldState.text.isEmpty()) {
                         Text(
-                            text = "재목 또는 저자를 입력해주세요.",
+                            text = "제목 또는 저자를 입력해주세요.",
                             style = MaterialTheme.typography.labelSmall,
                             color = grayColor
                         )

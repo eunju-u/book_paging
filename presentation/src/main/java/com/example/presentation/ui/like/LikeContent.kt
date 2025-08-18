@@ -19,8 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import com.example.presentation.ButtonType
+import com.example.presentation.LikeFilterType
+import com.example.presentation.LikeSortType
 import com.example.presentation.TabType
 import com.example.presentation.ui.widget.BookItemWidget
+import com.example.presentation.ui.widget.PopupWidget
 import com.example.presentation.ui.widget.TopWidget
 import com.example.presentation.viewModel.BookViewModel
 
@@ -32,6 +36,9 @@ fun LikeContent(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     var showSort by remember { mutableStateOf(false) }
+    val likeSort by viewModel.likeSort.collectAsState()
+    val likeFilter by viewModel.likeFilter.collectAsState()
+    val buttonType by viewModel.buttonType.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadLikes()
@@ -49,7 +56,12 @@ fun LikeContent(
                 viewModel.loadLikes(query)
             },
             keyboardController = keyboardController,
-            onSortClick = { showSort = true }
+            selectedSort = likeSort.text,
+            onSortClick = { type ->
+                viewModel.selectButtonType(type)
+                showSort = true
+            },
+            pointer = likeFilter != LikeFilterType.RESET
         )
 
 
@@ -72,6 +84,36 @@ fun LikeContent(
     }
 
     if (showSort) {
-        //TODO 핍압 노출
+        val items: List<Any> = when (buttonType) {
+            ButtonType.LIKE_SORT -> LikeSortType.entries
+            ButtonType.LIKE_FILTER -> LikeFilterType.entries
+            else -> emptyList()
+        }
+
+        val selectedItem = when (buttonType) {
+            ButtonType.LIKE_SORT -> likeSort
+            ButtonType.LIKE_FILTER -> likeFilter
+            else -> null
+        }
+
+        PopupWidget(
+            items = items,
+            selectedItem = selectedItem,
+            getText = {
+                when (it) {
+                    is LikeSortType -> it.text
+                    is LikeFilterType -> it.text
+                    else -> it.toString()
+                }
+            },
+            onItemSelected = { selected ->
+                when (selected) {
+                    is LikeSortType -> viewModel.selectLikeSort(selected)
+                    is LikeFilterType -> viewModel.selectLikeFilter(selected)
+                }
+                showSort = false
+            },
+            onDismiss = { showSort = false }
+        )
     }
 }
