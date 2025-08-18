@@ -36,6 +36,7 @@ fun LikeContent(
 ) {
     val list by viewModel.likes.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
+    val likeQuery by viewModel.likeQuery.collectAsState()
 
     var showSort by remember { mutableStateOf(false) }
     val likeSort by viewModel.likeSort.collectAsState()
@@ -55,8 +56,9 @@ fun LikeContent(
         TopWidget(
             selectedTabType = TabType.LIKE,
             onSearch = { query ->
-                viewModel.loadLikes(query)
+                viewModel.setLikeQuery(query)
             },
+            text = likeQuery,
             keyboardController = keyboardController,
             selectedSort = likeSort.text,
             onSortClick = { type ->

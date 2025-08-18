@@ -44,15 +44,12 @@ import com.example.presentation.R
 
 @Composable
 fun SearchWidget(
+    text: String,
     onSearch: (String) -> Unit = {},
     keyboardController: SoftwareKeyboardController? = null,
 ) {
     val focusManager = LocalFocusManager.current
-    var textFieldState by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(
-            TextFieldValue()
-        )
-    }
+    var textFieldState by remember { mutableStateOf(TextFieldValue(text)) }
 
     val pureGrayColor = Color.LightGray
     val grayColor = Color.Gray
@@ -100,6 +97,7 @@ fun SearchWidget(
                     onGo = {
                         onSearch(textFieldState.text)
                         keyboardController?.hide()
+                        focusManager.clearFocus()
                     }
                 ),
                 textStyle = MaterialTheme.typography.labelSmall.copy(color = darkColor),

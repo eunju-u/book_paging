@@ -22,15 +22,18 @@ import com.example.presentation.TabType
 
 @Composable
 fun TopWidget(
+    text: String,
     selectedTabType: TabType = TabType.SEARCH,
     onSearch: (String) -> Unit = {},
     keyboardController: SoftwareKeyboardController? = null,
-    selectedSort: String= "",
+    selectedSort: String = "",
     onSortClick: (type: ButtonType) -> Unit,
     pointer: Boolean = false
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth().background(Color.White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         //제목
@@ -41,7 +44,7 @@ fun TopWidget(
         Spacer(modifier = Modifier.height(16.dp))
 
         //검색창
-        SearchWidget(onSearch = onSearch, keyboardController = keyboardController)
+        SearchWidget(text = text, onSearch = onSearch, keyboardController = keyboardController)
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(

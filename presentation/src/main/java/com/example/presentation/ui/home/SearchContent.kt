@@ -41,6 +41,7 @@ fun SearchContent(
 ) {
     val list by viewModel.books.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     var showSort by remember { mutableStateOf(false) }
     val selectedSort by viewModel.searchSort.collectAsState()
@@ -75,10 +76,9 @@ fun SearchContent(
             TopWidget(
                 selectedTabType = TabType.SEARCH,
                 onSearch = { query ->
-                    if (query.isNotBlank()) {
-                        viewModel.loadBooks(query)
-                    }
+                    viewModel.setSearchQuery(query)
                 },
+                text = searchQuery,
                 keyboardController = keyboardController,
                 selectedSort = selectedSort.text,
                 onSortClick = { type ->

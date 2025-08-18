@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -42,9 +43,11 @@ class BookViewModel @Inject constructor(
 
     var isLoading by mutableStateOf(false)
 
-    private var searchQuery = ""
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
 
     private val _likeQuery = MutableStateFlow("")
+    val likeQuery: StateFlow<String> = _likeQuery
 
     // 버튼 타입
     private val _buttonType = MutableStateFlow(ButtonType.SEARCH_SORT)
@@ -90,6 +93,15 @@ class BookViewModel @Inject constructor(
         }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
 
+    init {
+        viewModelScope.launch {
+            _searchQuery
+                .collectLatest { query ->
+                    loadBooks(query, forceReload = true)
+                }
+        }
+    }
+
     // 바텀 탭 선택
     fun selectTab(tab: TabType) {
         _selectedTab.value = tab
@@ -118,16 +130,15 @@ class BookViewModel @Inject constructor(
 
     // 검색 데이터 로드 및 페이징 처리
     fun loadBooks(
-        query: String = searchQuery,
+        query: String = searchQuery.value,
         sort: SearchSortType = searchSort.value,
         forceReload: Boolean = false
     ) {
         viewModelScope.launch {
             isLoading = true
-            if (forceReload || query != searchQuery) {
+            if (forceReload) {
                 bookUseCase.resetPaging()
                 _scrollToTop.emit(Unit)
-                searchQuery = query
             }
             bookUseCase.loadBooks(query, sort.label)
             isLoading = false
@@ -135,7 +146,7 @@ class BookViewModel @Inject constructor(
     }
 
     // like DB 데이터 로드
-    fun loadLikes(query: String = _likeQuery.value) = viewModelScope.launch {
+    fun loadLikes(query: String = likeQuery.value) = viewModelScope.launch {
         _likeQuery.value = query
     }
 
@@ -148,10 +159,18 @@ class BookViewModel @Inject constructor(
 
     // book id로 책 정보 get
     fun getBookFlow(bookId: String): Flow<BookModel?> {
-        return combine(
-            books, likes
-        ) { bookList, likeList ->
+        return combine(books, likes) { bookList, likeList ->
             bookList.firstOrNull { it.id == bookId } ?: likeList.firstOrNull { it.id == bookId }
         }
+    }
+
+    // book 검색 쿼리 설정
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
+    // like 검색 쿼리 설정
+    fun setLikeQuery(query: String) {
+        _likeQuery.value = query
     }
 }
