@@ -103,7 +103,7 @@ com.example.book_paging
   - `ViewModel` → `UseCase` → `Repository` → `DataSource` 흐름
   - `Hilt`를 이용한 의존성 주입(DI) 관리
   - `BookRepositoryImpl`에서 서버에서 데이터 가져와 데이터와 관련된 페이징 로직 담당
-  - `BookUseCase`는 `BookRepositoryImpl`에서에서 제공한 데이터를 결합 combine 사용해 데이터 가공
+  - `BookUseCase`는 `BookRepositoryImpl`에서에서 제공한 데이터를 내부 DB에 저장된 데이터와 결합 combine 사용해 데이터 가공
  
 
 - **상태 관리**
@@ -124,6 +124,7 @@ com.example.book_paging
   - 검색어 입력 후 이동 클릭 시 ViewModel의 `searchQuery` 업데이트하여 자동으로 데이터 로드
   - `scrollToTop Flow` 구독하고 있어 이벤트 처리 시 스크롤 최상단 이동
   - `SearchSortType`을 통해 정렬 팝업(PopupWidget) 리스트 노출 및 변경 가능
+  - 서버에서 받아온 데이터와 내부 DB에 저장된 데이터를 combine을 이용해 좋아요 여부 데이터 매핑
 
 
 - **즐겨찾기 화면 (LikeContent)**
