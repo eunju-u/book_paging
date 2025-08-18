@@ -22,9 +22,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,16 +36,15 @@ class BookViewModel @Inject constructor(
     private val _selectedTab = MutableStateFlow(TabType.SEARCH)
     val selectedTab: StateFlow<TabType> = _selectedTab
 
+    //검색리스트
     val books =
         bookUseCase.getCombineFlow().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-    private val _likes = MutableStateFlow<List<BookModel>>(emptyList())
-
-    val likes: StateFlow<List<BookModel>> = _likes
 
     var isLoading by mutableStateOf(false)
 
     private var searchQuery = ""
-    private var likeQuery = ""
+
+    private val _likeQuery = MutableStateFlow("")
 
     // 버튼 타입
     private val _buttonType = MutableStateFlow(ButtonType.SEARCH_SORT)
@@ -68,13 +65,30 @@ class BookViewModel @Inject constructor(
     private val _scrollToTop = MutableSharedFlow<Unit>()
     val scrollToTop = _scrollToTop.asSharedFlow()
 
-    init {
-        viewModelScope.launch {
-            getLikeUseCase().collect { allLikes ->
-                applyLikesFilter(allLikes)
+    // 즐겨찾기 리스트
+    val likes: StateFlow<List<BookModel>> =
+        combine(
+            getLikeUseCase(),
+            _likeSort,
+            _likeFilter,
+            _likeQuery
+        ) { allList, sort, filter, query ->
+            var filtered = allList
+
+            if (filter != LikeFilterType.RESET) {
+                filtered = filtered.filter { it.price in filter.range }
             }
-        }
-    }
+
+            if (query.isNotBlank()) {
+                filtered = filtered.filter { it.title.contains(query, ignoreCase = true) }
+            }
+
+            when (sort) {
+                LikeSortType.ASCENDING -> filtered.sortedBy { it.title }
+                LikeSortType.DSCENDING -> filtered.sortedByDescending { it.title }
+            }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
 
     // 바텀 탭 선택
     fun selectTab(tab: TabType) {
@@ -95,13 +109,11 @@ class BookViewModel @Inject constructor(
     // like - 정렬 타입 선택
     fun selectLikeSort(sort: LikeSortType) {
         _likeSort.value = sort
-        refreshLikes()
     }
 
     // like - 필터 타입 선택
     fun selectLikeFilter(filterType: LikeFilterType) {
         _likeFilter.value = filterType
-        refreshLikes()
     }
 
     // 검색 데이터 로드 및 페이징 처리
@@ -123,53 +135,23 @@ class BookViewModel @Inject constructor(
     }
 
     // like DB 데이터 로드
-    fun loadLikes(query: String = likeQuery) = viewModelScope.launch {
-        likeQuery = query
-        refreshLikes()
-    }
-
-    // like 데이터 갱신
-    private fun refreshLikes() {
-        viewModelScope.launch {
-            val current = getLikeUseCase().first()
-            applyLikesFilter(current)
-        }
+    fun loadLikes(query: String = _likeQuery.value) = viewModelScope.launch {
+        _likeQuery.value = query
     }
 
     fun toggleLike(book: BookModel) {
         viewModelScope.launch {
             val toggledBook = book.copy(isLike = !book.isLike)
             toggleLikeUseCase(toggledBook)
-            _likes.update { list -> list.map { if (it.id == book.id) toggledBook else it } }
-
         }
-    }
-
-    // like 데이터 필터, 검색, 정렬 적용
-    private fun applyLikesFilter(allLikes: List<BookModel>) {
-        val filtered = if (_likeFilter.value != LikeFilterType.RESET) {
-            allLikes.filter { it.price in _likeFilter.value.range }
-        } else allLikes
-
-        val searched = if (likeQuery.isNotBlank()) {
-            filtered.filter { it.title.contains(likeQuery, ignoreCase = true) }
-        } else filtered
-
-        val sorted = when (_likeSort.value) {
-            LikeSortType.ASCENDING -> searched.sortedBy { it.title }
-            LikeSortType.DSCENDING -> searched.sortedByDescending { it.title }
-        }
-
-        _likes.value = sorted
     }
 
     // book id로 책 정보 get
     fun getBookFlow(bookId: String): Flow<BookModel?> {
         return combine(
-            books,
-            likes
-        ) { booksList, likesList ->
-            booksList.firstOrNull { it.id == bookId } ?: likesList.firstOrNull { it.id == bookId }
+            books, likes
+        ) { bookList, likeList ->
+            bookList.firstOrNull { it.id == bookId } ?: likeList.firstOrNull { it.id == bookId }
         }
     }
 }
