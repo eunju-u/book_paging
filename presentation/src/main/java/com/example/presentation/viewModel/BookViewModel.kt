@@ -42,6 +42,7 @@ class BookViewModel @Inject constructor(
         bookUseCase.getCombineFlow().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     var isLoading by mutableStateOf(false)
+    var error by mutableStateOf<String?>(null)
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
@@ -136,12 +137,18 @@ class BookViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             isLoading = true
-            if (forceReload) {
-                bookUseCase.resetPaging()
-                _scrollToTop.emit(Unit)
+            error = null
+            try {
+                if (forceReload) {
+                    bookUseCase.resetPaging()
+                    _scrollToTop.emit(Unit)
+                }
+                bookUseCase.loadBooks(query, sort.label)
+            } catch (e: Exception) {
+                error = "네트워크를 확인해 주세요"
+            } finally {
+                isLoading = false
             }
-            bookUseCase.loadBooks(query, sort.label)
-            isLoading = false
         }
     }
 
