@@ -1,12 +1,9 @@
 package com.example.domain.repository
 
-import com.example.domain.model.BookModel
+import com.example.domain.model.PageBooks
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface BookRepository {
-    suspend fun loadBooks(query: String, sort: String)
-    suspend fun resetPaging()
-    val booksFlow: StateFlow<List<BookModel>>
+    suspend fun loadBooks(query: String, sort: String, page: Int, size: Int): PageBooks
     fun getLikesFlow(): Flow<List<String>>
 }

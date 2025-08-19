@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.info.UiInfo
 import com.example.domain.model.BookModel
 import com.example.domain.usecase.BookUseCase
 import com.example.domain.usecase.LikeUseCase
@@ -42,7 +43,9 @@ class BookViewModel @Inject constructor(
         bookUseCase.getCombineFlow().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     var isLoading by mutableStateOf(false)
-    var error by mutableStateOf<String?>(null)
+
+    var responseInfo by mutableStateOf<UiInfo<List<BookModel>>?>(null)
+        private set
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
@@ -137,18 +140,14 @@ class BookViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             isLoading = true
-            error = null
-            try {
-                if (forceReload) {
-                    bookUseCase.resetPaging()
-                    _scrollToTop.emit(Unit)
-                }
-                bookUseCase.loadBooks(query, sort.label)
-            } catch (e: Exception) {
-                error = "네트워크를 확인해 주세요"
-            } finally {
-                isLoading = false
+
+            if (forceReload) {
+                bookUseCase.resetPaging()
+                _scrollToTop.emit(Unit)
             }
+            val result = bookUseCase.loadBooks(query, sort.label)
+            responseInfo = result
+            isLoading = false
         }
     }
 
