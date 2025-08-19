@@ -32,8 +32,7 @@ class BookUseCase @Inject constructor(
 
             if (pagingBook.isEnd) isEndReached = true
 
-
-            if (pagingBook.books.isEmpty() && currentPage == 1) return UiInfo.NoneSearch
+            if (query.isNotEmpty() && pagingBook.books.isEmpty() && currentPage == 1) return UiInfo.NoneSearch
 
             val list = _booksFlow.value + pagingBook.books
             _booksFlow.value = list
