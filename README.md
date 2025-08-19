@@ -59,14 +59,17 @@ com.example.book_paging
           - BookRepositoryImpl
           - LikeRepositoryImpl
 * domain/  
-     - model/
-          - BookModel
-     - repository/
-          - BookRepository
-          - LikeRepository
-     - usecase/
-          - BookUseCase
-          - LikeUseCase
+     - info/  
+          - UiInfo  
+     - model/  
+          - BookModel  
+          - PageBooks  
+     - repository/  
+          - BookRepository  
+          - LikeRepository  
+     - usecase/  
+          - BookUseCase  
+          - LikeUseCase  
           - ToggleLikeUseCase  
 * presentation/  
      - Const  
@@ -83,7 +86,7 @@ com.example.book_paging
                 - LeftImageButton  
                 - RowTextWidget  
                 - SearchWidget  
-                - TopWidget
+                - TopWidget  
                 - PopupWidget  
      - viewModel/  
            - BookViewModel  
@@ -102,8 +105,8 @@ com.example.book_paging
   - `presentation` / `domain` / `data` / `api` / `database` 모듈화
   - `ViewModel` → `UseCase` → `Repository` → `DataSource` 흐름
   - `Hilt`를 이용한 의존성 주입(DI) 관리
-  - `BookRepositoryImpl`에서 서버에서 데이터 가져와 데이터와 관련된 페이징 로직 담당
-  - `BookUseCase`는 `BookRepositoryImpl`에서에서 제공한 데이터를 내부 DB에 저장된 데이터와 결합 combine 사용해 데이터 가공
+  - `BookRepositoryImpl`에서 서버에서 데이터 가져와 is_end, list가 포함된 객체로 반환
+  - `BookUseCase`는 `BookRepositoryImpl`에서에서 제공한 데이터를 내부 DB에 저장된 데이터와 결합 combine 사용해 데이터 가공 및 페이징 로직
  
 
 - **상태 관리**
