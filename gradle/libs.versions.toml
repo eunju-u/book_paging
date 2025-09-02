@@ -19,6 +19,14 @@ room = "2.6.1"
 androidxHiltNavigationCompose = "1.2.0"
 lifecycleRuntime = "2.8.4"
 coil = "2.4.0"
+jetbrainsKotlinJvm = "2.0.21"
+androidTools = "31.5.0"
+ksp = "1.9.22-1.0.17"
+androidDesugarJdkLibs = "2.0.3"
+
+projectMinSdkVersion = "28"
+projectTargetSdkVersion = "35"
+projectCompileSdkVersion = "35"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,9 +62,21 @@ androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "life
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+#room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+multi-module-android-application = { id = "multi.module.android.application", version = "unspecified"}
+multi-module-android-library = { id = "multi.module.android.library", version = "unspecified"}

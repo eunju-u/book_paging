@@ -2,8 +2,7 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.multi.module.android.library)
     alias(libs.plugins.hilt)
     kotlin("kapt")
 }
@@ -14,10 +13,8 @@ val properties = Properties().apply {
 
 android {
     namespace = "com.example.api"
-    compileSdk = 35
 
     defaultConfig {
-        minSdk = 28
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "KAKAO_API_URL", properties["KAKAO_API_URL"].toString())
         buildConfigField("String", "KAKAO_API_KEY", properties["KAKAO_API_KEY"].toString())
@@ -35,9 +32,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         buildConfig = true
