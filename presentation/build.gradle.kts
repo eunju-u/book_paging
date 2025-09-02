@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.multi.module.android.library)
     alias(libs.plugins.multi.module.android.hilt)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.multi.module.android.compose)
 }
 
 android {
@@ -9,10 +9,6 @@ android {
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildFeatures {
-        compose = true
     }
 }
 
@@ -23,16 +19,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.material3)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui.tooling.preview)
-
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.lifecycle.runtimeCompose)
 
     // coil
     implementation(libs.coil.compose)

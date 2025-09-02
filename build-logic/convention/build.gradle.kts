@@ -32,5 +32,10 @@ gradlePlugin {
             id = "multi.module.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+
+        register("androidCompose") {
+            id = "multi.module.android.compose"
+            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
     }
 }
