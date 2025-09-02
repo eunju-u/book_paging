@@ -1,4 +1,6 @@
 import com.android.build.gradle.LibraryExtension
+import com.multi.module.convention.ExtensionType
+import com.multi.module.convention.configureBuildTypes
 import com.multi.module.convention.configureKotlinAndroid
 import com.multi.module.convention.libs
 import org.gradle.api.Plugin
@@ -15,6 +17,10 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
+                configureBuildTypes(
+                    commonExtension = this,
+                    extensionType = ExtensionType.LIBRARY
+                )
                 defaultConfig.targetSdk =
                     libs.findVersion("projectTargetSdkVersion").get().requiredVersion.toInt()
             }
