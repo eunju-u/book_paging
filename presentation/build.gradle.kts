@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.multi.module.android.library)
+    alias(libs.plugins.multi.module.android.hilt)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
 }
 
 android {
@@ -43,10 +42,6 @@ dependencies {
 
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtimeCompose)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 
     // coil
     implementation(libs.coil.compose)

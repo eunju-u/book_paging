@@ -3,8 +3,7 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.multi.module.android.library)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.multi.module.android.hilt)
 }
 
 val properties = Properties().apply {
@@ -48,9 +47,4 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.logging.interceptor)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
 }

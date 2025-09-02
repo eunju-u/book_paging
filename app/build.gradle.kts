@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.multi.module.android.application)
+    alias(libs.plugins.multi.module.android.hilt)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
 }
 
 android {
@@ -45,10 +44,6 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     implementation(libs.androidx.hilt.navigation.compose)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 
     // 모듈
     implementation(project(":presentation"))

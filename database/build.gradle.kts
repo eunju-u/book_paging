@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.multi.module.android.library)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.multi.module.android.hilt)
     kotlin("kapt")
 }
 
@@ -32,8 +32,4 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 }

@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.multi.module.android.library)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.multi.module.android.hilt)
 }
 
 android {
@@ -27,10 +26,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 
     //모듈
     implementation(project(":api"))

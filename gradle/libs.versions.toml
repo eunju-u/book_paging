@@ -21,7 +21,7 @@ lifecycleRuntime = "2.8.4"
 coil = "2.4.0"
 jetbrainsKotlinJvm = "2.0.21"
 androidTools = "31.5.0"
-ksp = "1.9.22-1.0.17"
+ksp = "2.0.21-1.0.25"
 androidDesugarJdkLibs = "2.0.3"
 
 projectMinSdkVersion = "28"
@@ -77,6 +77,8 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 android-library = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 multi-module-android-application = { id = "multi.module.android.application", version = "unspecified"}
 multi-module-android-library = { id = "multi.module.android.library", version = "unspecified"}
+multi-module-android-hilt = { id = "multi.module.android.hilt", version = "unspecified"}
