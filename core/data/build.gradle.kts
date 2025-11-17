@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.multi.module.android.library)
     alias(libs.plugins.multi.module.android.hilt)
-    alias(libs.plugins.multi.module.android.compose)
 }
 
 android {
-    namespace = "com.example.presentation"
+    namespace = "com.example.data"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -14,17 +13,12 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // coil
-    implementation(libs.coil.compose)
-
     //모듈
-    implementation(project(":core:domain"))
-    implementation(project(":core:data"))
     implementation(project(":core:network"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:database"))
 }

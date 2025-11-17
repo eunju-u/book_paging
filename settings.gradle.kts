@@ -24,8 +24,8 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "book_paging"
 include(":app")
-include(":api")
 include(":presentation")
-include(":domain")
-include(":data")
-include(":database")
+include(":core:database")
+include(":core:data")
+include(":core:domain")
+include(":core:network")

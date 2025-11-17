@@ -36,41 +36,49 @@ KAKAO_API_KEY="KakaoAK c458758c6e4a03e15fb4e176538b22f6"
 
 ## 📂 프로젝트 구조
 com.example.book_paging
-* app  
+* app/  
      - BookApplication  
      - MainActivity  
-* api  
-     - ApiService  
-     - di/  
-          - ApiModule  
-          - NetworkModule  
-     - dto/  
-          - BookDto  
-          - BookResponse  
-          - Meta  
-* data/  
-     - datasource/  
-          - BookDataSource  
-          - LikeDataSource  
-     - di/
-          - RepositoryModule
-     - mapper
-     - repository/
-          - BookRepositoryImpl
-          - LikeRepositoryImpl
-* domain/  
-     - info/  
-          - UiInfo  
-     - model/  
-          - BookModel  
-          - PageBooks  
-     - repository/  
-          - BookRepository  
-          - LikeRepository  
-     - usecase/  
-          - BookUseCase  
-          - LikeUseCase  
-          - ToggleLikeUseCase  
+* core
+  * api/  
+       - ApiService  
+       - di/  
+            - ApiModule  
+            - NetworkModule  
+       - dto/  
+            - BookDto  
+            - BookResponse  
+            - Meta  
+  * data/  
+       - datasource/  
+            - BookDataSource  
+            - LikeDataSource  
+       - di/
+            - RepositoryModule
+       - mapper
+       - repository/
+            - BookRepositoryImpl
+            - LikeRepositoryImpl
+  * domain/  
+       - info/  
+            - UiInfo  
+       - model/  
+            - BookModel  
+            - PageBooks  
+       - repository/  
+            - BookRepository  
+            - LikeRepository  
+       - usecase/  
+            - BookUseCase  
+            - LikeUseCase  
+            - ToggleLikeUseCase  
+  * database/
+      - di/  
+        - DatabaseModule
+      - Converter
+      - LikeDao
+      - LikeDb
+      - LikeEntity
 * presentation/  
      - Const  
      - ui/  
@@ -89,14 +97,7 @@ com.example.book_paging
                 - TopWidget  
                 - PopupWidget  
      - viewModel/  
-           - BookViewModel  
-* database  
-     - di/  
-           - DatabaseModule  
-     - Converter  
-     - LikeDao 
-     - LikeDb  
-     - LikeEntity  
+           - BookViewModel
 
 
 ## 👩🏻‍💻 주요 구현 포인트
