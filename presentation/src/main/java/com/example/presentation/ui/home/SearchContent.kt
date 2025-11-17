@@ -64,7 +64,7 @@ fun SearchContent(
     LaunchedEffect(state, list) {
         snapshotFlow { state.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
             .collect { lastIndex ->
-                if (list.isNotEmpty() && lastIndex == list.lastIndex) {
+                if (list.isNotEmpty() && lastIndex == list.lastIndex && !viewModel.isLoading && viewModel.responseInfo !is UiInfo.PagingEnd) {
                     viewModel.loadBooks()
                 }
             }

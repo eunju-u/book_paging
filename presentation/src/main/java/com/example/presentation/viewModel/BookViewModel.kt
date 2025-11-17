@@ -138,6 +138,7 @@ class BookViewModel @Inject constructor(
         sort: SearchSortType = searchSort.value,
         forceReload: Boolean = false
     ) {
+        if (query.isBlank()) return
         viewModelScope.launch {
             isLoading = true
 
