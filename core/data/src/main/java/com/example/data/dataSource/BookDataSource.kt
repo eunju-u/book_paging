@@ -4,7 +4,7 @@ import com.example.network.ApiService
 import com.example.network.dto.BookResponse
 import javax.inject.Inject
 
-class BookDataSource @Inject constructor(
+internal class BookDataSource @Inject constructor(
     private val apiService: ApiService
 ) {
     suspend fun getBooks(

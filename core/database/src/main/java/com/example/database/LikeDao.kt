@@ -7,7 +7,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface LikeDao {
+internal interface LikeDao {
     @Query("SELECT * FROM like_table")
     fun getAllLikeFlow(): Flow<List<LikeEntity>>
 

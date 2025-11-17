@@ -1,6 +1,6 @@
 package com.example.network.dto
 
-data class BookDto(
+internal data class BookDto(
     val id: Int,
     val title: String, //도서 제목
     val contents: String, //도서 소개

@@ -5,7 +5,7 @@ import com.example.database.LikeEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LikeDataSource @Inject constructor(
+internal class LikeDataSource @Inject constructor(
     private val likeDao: LikeDao
 ) {
     suspend fun addLike(entity: LikeEntity) = likeDao.insert(entity)
