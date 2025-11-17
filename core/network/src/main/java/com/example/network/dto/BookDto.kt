@@ -1,5 +1,8 @@
 package com.example.network.dto
 
+import androidx.annotation.Keep
+
+@Keep
 data class BookDto(
     val id: Int,
     val title: String, //도서 제목
