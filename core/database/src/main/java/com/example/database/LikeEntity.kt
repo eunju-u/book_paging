@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "like_table")
-internal data class LikeEntity(
+data class LikeEntity(
     @PrimaryKey
     val id: String,
     val title: String, //도서 제목

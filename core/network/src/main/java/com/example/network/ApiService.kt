@@ -4,7 +4,7 @@ import com.example.network.dto.BookResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface ApiService {
+interface ApiService {
     @GET("v3/search/book")
     suspend fun getBooks(
         @Query("query") query: String, //검색어

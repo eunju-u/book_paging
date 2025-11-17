@@ -8,7 +8,7 @@ import com.example.domain.repository.BookRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-internal class BookRepositoryImpl @Inject constructor(
+class BookRepositoryImpl @Inject constructor(
     private val bookDataSource: BookDataSource,
     private val likeDataSource: LikeDataSource
 ) : BookRepository {
